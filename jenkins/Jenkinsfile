@@ -1,43 +1,42 @@
+
 pipeline {
-  agent any
+    agent any
 
-  stages {
-   
-   stage('clone project') {
-      steps {
-           git branch:'master' , url:'https://github.com/Meenakshiii-bit/Amazon-Ecom.git'
-       }
-   }
+    stages {
 
-   stage('clean') {
-      steps {
-           sh 'mvn clean'
-       }
-   }
+        stage('clone project') {
+            steps {
+                git branch: 'master',
+                    url: 'https://github.com/Meenakshiii-bit/Amazon-Ecom.git'
+            }
+        }
 
-   stage('compile') {
-      steps {
-           sh 'mvn compile'
-       }
-   }
+        stage('clean') {
+            steps {
+                sh 'mvn clean'
+            }
+        }
 
-   stage('test') {
-      steps {
-           sh 'mvn test'
-       }
-   }
+        stage('compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
 
-   stage('build') {
-      steps {
-           sh 'mvn clean install'
-       }
-   }
-   
-}
+        stage('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
 
-}
+        stage('build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+    }
 
-post {
+    post {
         success {
             emailext(
                 subject: "BUILD SUCCESS: ${env.JOB_NAME}",
